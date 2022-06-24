@@ -583,18 +583,18 @@ public class GeoList extends GeoElement
 	public MyList getMyList() {
 		final int size = elements.size();
 		final MyList myList = new MyList(kernel, size);
-		copyListElements(myList);
+		copyListElements(myList, false);
 		return myList;
 	}
 
 	/**
 	 * @param myList list to copy into
 	 */
-	public void copyListElements(MyList myList) {
+	public void copyListElements(MyList myList, boolean deep) {
 		for (GeoElement element : elements) {
 			myList.addListElement(element.isGeoList()
 					? ((GeoList) element).getMyList()
-					: new ExpressionNode(kernel, element));
+					: new ExpressionNode(kernel, deep ? element.copy() : element));
 		}
 	}
 

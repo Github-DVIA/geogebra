@@ -6,6 +6,7 @@ import org.geogebra.common.kernel.algos.GetCommand;
 import org.geogebra.common.kernel.arithmetic.ExpressionNode;
 import org.geogebra.common.kernel.arithmetic.Function;
 import org.geogebra.common.kernel.arithmetic.FunctionVariable;
+import org.geogebra.common.kernel.arithmetic.Inspecting;
 import org.geogebra.common.kernel.arithmetic.MyDouble;
 import org.geogebra.common.kernel.arithmetic.MyList;
 import org.geogebra.common.kernel.arithmetic.MyNumberPair;
@@ -59,8 +60,10 @@ public class AlgoLineGraph extends AlgoElement {
 		}
 		xValuesCopy.clear();
 		yValuesCopy.clear();
-		xValues.copyListElements(xValuesCopy);
-		yValues.copyListElements(yValuesCopy);
+		boolean deepCopy = Inspecting.dynamicGeosFinder.check(xValues)
+				|| Inspecting.dynamicGeosFinder.check(yValues);
+		xValues.copyListElements(xValuesCopy, deepCopy);
+		yValues.copyListElements(yValuesCopy, deepCopy);
 		graph.setDefined(true);
 		graph.setInterval(xValues.get(0).evaluateDouble(),
 				xValues.get(xValues.size() - 1).evaluateDouble());
